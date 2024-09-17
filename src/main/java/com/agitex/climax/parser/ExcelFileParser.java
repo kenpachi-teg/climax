@@ -1,52 +1,6 @@
-package com.agitex.climax.parser;//package com.agitex.climax.parser;
-//
-//import com.agitex.climax.model.Client;
-//import org.apache.poi.ss.usermodel.Row;
-//import org.apache.poi.ss.usermodel.Sheet;
-//import org.apache.poi.ss.usermodel.Workbook;
-//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-//import org.springframework.stereotype.Service;
-//
-//import java.io.File;
-//import java.io.FileInputStream;
-//import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Service
-//public class ExcelFileParser implements FileParser {
-//
-//    @Override
-//    public List<Client> parse(File file) throws IOException {
-//        List<Client> clients = new ArrayList<>();
-//
-//        try (FileInputStream fis = new FileInputStream(file);
-//             Workbook workbook = new XSSFWorkbook(fis)) {
-//
-//            Sheet sheet = workbook.getSheetAt(0); // Suppose que les données sont dans la première feuille
-//            for (Row row : sheet) {
-//                if (row.getRowNum() == 0) {
-//                    // Sauter la première ligne (header)
-//                    continue;
-//                }
-//
-//                Client client = new Client();
-//                client.setNom(row.getCell(0).getStringCellValue());
-//                client.setPrenom(row.getCell(1).getStringCellValue());
-//                client.setAge(Integer.parseInt(row.getCell(2).getStringCellValue()));
-//                client.setProfession(row.getCell(3).getStringCellValue());
-//                client.setSalaire(row.getCell(4).getNumericCellValue());
-//
-//                clients.add(client);
-//            }
-//        }
-//
-//        return clients;
-//    }
-//}
+package com.agitex.climax.parser;
 
 import com.agitex.climax.model.Client;
-import com.agitex.climax.parser.FileParser;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 
@@ -81,7 +35,7 @@ public class ExcelFileParser implements FileParser {
         client.setNom(row.getCell(0).getStringCellValue());
         client.setPrenom(row.getCell(1).getStringCellValue());
 
-        Cell ageCell = row.getCell(0);
+        Cell ageCell = row.getCell(2);
         if (ageCell != null) {
             if (ageCell.getCellType() == CellType.NUMERIC) {
                 client.setAge((int) ageCell.getNumericCellValue());
@@ -90,9 +44,8 @@ public class ExcelFileParser implements FileParser {
             }
         }
 
-//        client.setAge(Integer.parseInt(row.getCell(2).getStringCellValue()));
         client.setProfession(row.getCell(3).getStringCellValue());
-        client.setSalaire(Double.parseDouble(row.getCell(4).getStringCellValue()));
+        client.setSalaire(row.getCell(4).getNumericCellValue());
         // Ajoutez d'autres champs selon la structure de votre XLSX
         return client;
     }

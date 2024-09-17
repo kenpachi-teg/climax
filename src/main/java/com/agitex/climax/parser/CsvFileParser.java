@@ -38,7 +38,12 @@ public class CsvFileParser implements FileParser {
         List<Client> clients = new ArrayList<>();
         try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream))) {
             String[] line;
+            boolean isFirstLine = true;
             while ((line = reader.readNext()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
                 Client client = parseCsvLineToClient(line);
                 clients.add(client);
             }
@@ -53,10 +58,31 @@ public class CsvFileParser implements FileParser {
         Client client = new Client();
         client.setNom(line[0]);
         client.setPrenom(line[1]);
-        client.setAge(Integer.parseInt(line[2]));
+
+        if (isNumeric(line[2])) {
+            client.setAge(Integer.parseInt(line[2]));
+        } else {
+            // Gérer le cas où la valeur d'âge n'est pas un nombre valide
+            throw new NumberFormatException("Valeur d'âge non valide : " + line[2]);
+        }
+
+//        client.setAge(Integer.parseInt(line[2]));
         client.setProfession(line[3]);
         client.setSalaire(Double.parseDouble(line[4]));
         return client;
+    }
+
+    private boolean isNumeric(String str) {
+        // Méthode utilitaire pour vérifier si une chaîne est un nombre valide
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }

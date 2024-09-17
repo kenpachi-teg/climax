@@ -33,17 +33,6 @@ public class FileProcessor {
                 .orElseThrow(() -> new IllegalArgumentException("Parser not found for: " + parserClass.getSimpleName()));
     }
 
-//    public List<Client> processFile(File file) throws IOException {
-//        String extension = getFileExtension(file);
-//        FileParser parser = parsers.get(extension);
-//
-//        if (parser == null) {
-//            throw new UnsupportedOperationException("format de fichier non supporté: " + extension);
-//        }
-//
-//        return parser.parse(file);
-//    }
-
     public List<Client> processFile(InputStream inputStream, String fileName) throws IOException {
         String extension = getFileExtension(fileName);
 

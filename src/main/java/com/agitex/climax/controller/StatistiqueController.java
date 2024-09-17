@@ -4,18 +4,13 @@ import com.agitex.climax.model.Client;
 import com.agitex.climax.parser.FileProcessor;
 import com.agitex.climax.service.StatistiqueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -28,16 +23,6 @@ public class StatistiqueController {
 
     @Autowired
     private StatistiqueService statistiqueService;
-
-//    @PostMapping("/upload")
-//    public Map<String, Double> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-//        File tempFile = File.createTempFile("uploaded-", ".tmp");
-//        file.transferTo(tempFile);
-//
-//        List<Client> clients = fileProcessor.processFile(tempFile);
-//        return statistiqueService.calculeMoyenneSalaireParProfession(clients);
-//    }
-
 
     @PostMapping("/upload")
     public Map<String, Double> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
